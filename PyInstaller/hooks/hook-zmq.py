@@ -26,13 +26,6 @@ hiddenimports = ['zmq.utils.garbage',
 hiddenimports.extend(collect_submodules('zmq.backend'))
 
 
-hiddenimports = [
-    'zmq.core.pysocket',
-    'zmq.utils.jsonapi',
-    'zmq.utils.strtypes',
-]
-
-
 def hook(mod):
     # If PyZMQ provides its own copy of libzmq, add it to the
     # extension-modules TOC so zmq/__init__.py can load it at runtime.
