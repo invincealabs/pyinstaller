@@ -12,7 +12,8 @@
 Hook for PyZMQ. Cython based Python bindings for messaging library ZeroMQ.
 http://www.zeromq.org/
 """
-import glob
+
+import re
 import os
 from PyInstaller.hooks.hookutils import collect_submodules
 
@@ -26,13 +27,16 @@ def hook(mod):
     # to the search in zmq/__init__.py.
     zmq_directory = os.path.dirname(mod.__file__)
     for libname in ('libzmq', 'libsodium'):
-        bundled = glob.glob(os.path.join(zmq_directory,
-                                         libname + '*.{pyd,so,dll,dylib}*'))
+        libname_re = re.compile(libname + r"\.(?:so|pyd|dll|dylib).*")
+        bundled = [os.path.join(zmq_directory, fname)
+                   for fname in os.listdir(zmq_directory)
+                   if libname_re.match(fname)]
+
         if bundled:
             # zmq/__init__.py will look in os.join(sys._MEIPASS, 'zmq'),
             # so libzmq has to land there.
             name = os.path.join('zmq', os.path.basename(bundled[0]))
             # TODO fix this hook to use attribute 'binaries'.
-            mod.pyinstaller_binaries.append((name, bundled[0], 'BINARY'))
+            mod.binaries.append((name, bundled[0], 'BINARY'))
 
     return mod
