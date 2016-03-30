@@ -16,7 +16,14 @@ http://www.zeromq.org/
 
 import glob
 import os
-import sys
+from PyInstaller.hooks.hookutils import collect_submodules
+
+hiddenimports = ['zmq.utils.garbage',
+                 'zmq.core.pysocket',
+                 'zmq.utils.jsonapi',
+                 'zmq.utils.strtypes',
+                 ]
+hiddenimports.extend(collect_submodules('zmq.backend'))
 
 
 hiddenimports = [
@@ -32,8 +39,12 @@ def hook(mod):
     # For predictable behavior, the libzmq search here must be identical
     # to the search in zmq/__init__.py.
     zmq_directory = os.path.dirname(mod.__file__)
-    for ext in ('pyd', 'so', 'dll', 'dylib'):
-        bundled = glob.glob(os.path.join(zmq_directory, 'libzmq*.%s*' % ext))
+    for libname in ('libzmq', 'libsodium'):
+        libname_re = re.compile(libname + r"\.(?:so|pyd|dll|dylib).*")
+        bundled = [os.path.join(zmq_directory, fname)
+                   for fname in os.listdir(zmq_directory)
+                   if libname_re.match(fname)]
+
         if bundled:
             # zmq/__init__.py will look in os.join(sys._MEIPASS, 'zmq'),
             # so libzmq has to land there.
