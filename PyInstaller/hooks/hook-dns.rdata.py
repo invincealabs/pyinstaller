@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------------
 
 
-hiddenimports = [
-    "dns.rdtypes.*",
-    "dns.rdtypes.ANY.*"
-]
+# This is hook for DNS python package dnspython.
+
+from PyInstaller.utils.hooks import collect_submodules
+hiddenimports = collect_submodules('dns.rdtypes')

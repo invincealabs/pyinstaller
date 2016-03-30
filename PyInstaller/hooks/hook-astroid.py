@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2014, PyInstaller Development Team.
+# Copyright (c) 2014-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -28,9 +28,16 @@
 # since this is run-time discovered and loaded. Therefore, these
 # files are all data files.
 
-from hookutils import collect_data_files
+from PyInstaller.utils.hooks import collect_data_files, collect_submodules
 
 # Note that brain/ isn't a module (it lacks an __init__.py, so it can't be
 # referred to as astroid.brain; instead, locate it as package astriod,
 # subdirectory brain/.
 datas = collect_data_files('astroid', True, 'brain')
+
+# Update: in astroid v 1.4.1, the brain/ module import parts of astroid. Since
+# everything in brain/ is dynamically imported, these are hidden imports. For
+# simplicity, include everything in astroid. Exclude all the tests/ subpackage
+# contents and the test_util module.
+hiddenimports = [x for x in collect_submodules('astroid')
+                 if not x.startswith('astroid.test')]

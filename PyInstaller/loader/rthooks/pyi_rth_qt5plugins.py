@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -28,6 +28,16 @@ if 'QT_PLUGIN_PATH' in os.environ:
     # empty string.
     os.environ['QT_PLUGIN_PATH'] = ''
     del os.environ['QT_PLUGIN_PATH']
+
+try:
+    import sip
+except ImportError:
+    # The packaging system may name sip PyQt5.sip, so make it available as "sip"
+    try:
+        import PyQt5.sip as sip
+        sys.modules['sip'] = sip
+    except ImportError:
+        pass  # if this didn't work, there will be a NameError later
 
 
 # We cannot use QT_PLUGIN_PATH here, because it would not work when

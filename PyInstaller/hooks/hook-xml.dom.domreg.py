@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -9,4 +9,4 @@
 
 
 # xml.dom.domreg line 54
-hiddenimports = ['xml.dom.minidom','xml.dom.DOMImplementation']
+hiddenimports = ['xml.dom.minidom']

@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -8,6 +8,13 @@
 #-----------------------------------------------------------------------------
 
 
-from PyInstaller.hooks.hookutils import collect_submodules
+from PyInstaller.utils.hooks import collect_submodules
 
-hiddenimports = collect_submodules('sqlite3')
+hiddenimports = []
+
+# On Windows in Python 3.4 'sqlite3' package might contain tests.
+# these tests are not necessary for the final executable.
+for mod in collect_submodules('sqlite3'):
+    if not mod.startswith('sqlite3.test'):
+        hiddenimports.append(mod)
+

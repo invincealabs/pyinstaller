@@ -1,54 +1,120 @@
-.. image:: http://www.pyinstaller.org/chrome/site/logo.png
-   :align: right
-   :target: http://www.pyinstaller.org
+PyInstaller Overview
+====================
 
-PyInstaller
-===========
-.. image:: http://img.shields.io/pypi/v/PyInstaller.png
-   :target: https://pypi.python.org/pypi/PyInstaller
+PyInstaller bundles a Python application and all its dependencies into a single
+package. The user can run the packaged app without installing a Python
+interpreter or any modules.
 
-.. image:: http://img.shields.io/pypi/dm/PyInstaller.png
-   :target: https://pypi.python.org/pypi/PyInstaller
 
-.. image:: http://img.shields.io/travis/pyinstaller/pyinstaller.png
+.. image:: https://img.shields.io/travis/pyinstaller/pyinstaller/develop.svg?label=Linux
    :target: https://travis-ci.org/pyinstaller/pyinstaller/
+   :alt: Travis CI test status (Linux)
+
+.. image:: https://img.shields.io/travis/pyinstaller/pyinstaller-osx-tests/master.svg?label=OS%20X
+   :target: https://travis-ci.org/pyinstaller/pyinstaller-osx-tests
+   :alt: Travis CI test status (OS X)
+
+.. image:: https://img.shields.io/appveyor/ci/matysek/pyinstaller/develop.svg?label=Windows
+   :target: https://ci.appveyor.com/project/matysek/pyinstaller/branch/develop
+   :alt: AppVeyor CI test status (Windows)
+
+.. image:: https://landscape.io/github/pyinstaller/pyinstaller/develop/landscape.svg?
+   :target: https://landscape.io/github/pyinstaller/pyinstaller/develop
+   :alt: Code health
+
+.. image:: https://img.shields.io/pypi/v/PyInstaller.svg
+   :target: https://pypi.python.org/pypi/PyInstaller
+
+.. image:: https://img.shields.io/pypi/dm/PyInstaller.svg
+   :target: https://pypi.python.org/pypi/PyInstaller
+
+.. image:: https://img.shields.io/badge/docs-latest-blue.svg
+   :target: https://pyinstaller.rtfd.org/en/latest/
+   :alt: Manual
+
+.. image:: https://img.shields.io/badge/changes-latest-blue.svg
+   :target: https://pyinstaller.rtfd.org/en/latest/CHANGES.html
+   :alt: Changelog
+
+.. image:: https://img.shields.io/badge/IRC-pyinstalller-blue.svg
+   :target: http://webchat.freenode.net/?channels=%23pyinstaller&uio=d4
+   :alt: IRC
 
 
-| Official website: http://www.pyinstaller.org
-| Full manual: http://pythonhosted.org/PyInstaller
-| Full changelog: `changelog`_
+:Documentation: https://pythonhosted.org/PyInstaller/
+:Website:       http://www.pyinstaller.org
+:Code:          https://github.com/pyinstaller/pyinstaller
 
 
-Requirements
-------------
-- Python: 
-   * 2.6 - 2.7 (Python 3 is not supported)
-   * PyCrypto_ 2.4+ (only if using bytecode encryption)
+PyInstaller reads a Python script written by you. It analyzes your code
+to discover every other module and library your script needs in order to
+execute. Then it collects copies of all those files -- including the active
+Python interpreter! -- and puts them with your script in a single folder, or
+optionally in a single executable file.
 
-- Windows (32bit/64bit):
-   * Windows XP or newer.
-   * pywin32_ when using Python 2.6+
-    
-- Linux (32bit/64bit)
-   * ldd: Console application to print the shared libraries required
-     by each program or shared library. This typically can by found in
-     the distribution-package `glibc` or `libc-bin`.
-   * objdump: Console application to display information from 
-     object files. This typically can by found in the
-     distribution-package `binutils`.
 
-- Mac OS X (32/64bit):
-   * Mac OS X 10.6 (Tiger) or newer.
+PyInstaller is tested against Windows, Mac OS X, and Linux. However, it is not
+a cross-compiler: to make a Windows app you run PyInstaller in Windows; to make
+a Linux app you run it in Linux, etc. PyInstaller has been used successfully
+with AIX, Solaris, and FreeBSD, but is not tested against them.
+
+
+Main Advantages
+---------------
+
+- Works out-of-the-box with any Python version 2.7 / 3.3-3.5.
+- Fully multi-platform, and uses the OS support to load the dynamic libraries,
+  thus ensuring full compatibility.
+- Correctly bundles the major Python packages such as numpy, PyQt4, PyQt5,
+  PySide, Django, wxPython, matplotlib and others out-of-the-box.
+- Compatible with many 3rd-party packages out-of-the-box. (All the required
+  tricks to make external packages work are already integrated.)
+- Libraries like PyQt5, PyQt4, PySide, wxPython, matplotlib or Django are fully
+  supported, without having to handle plugins or external data files manually.
+- Working code signing on OS X.
+- Bundles MS Visual C++ DLLs on Windows.
 
 
 Installation
 ------------
+
 PyInstaller is available on PyPI. You can install it through `pip`::
 
       pip install pyinstaller
 
+
+Requirements and Tested Platforms
+------------------------------------
+
+- Python: 
+
+ - 2.7 or 3.3+
+ - PyCrypto_ 2.4+ (only if using bytecode encryption)
+
+- Windows (32bit/64bit):
+
+ - Windows XP or newer.
+    
+- Linux (32bit/64bit)
+
+ - ldd: Console application to print the shared libraries required
+   by each program or shared library. This typically can be found in
+   the distribution-package `glibc` or `libc-bin`.
+ - objdump: Console application to display information from 
+   object files. This typically can be found in the
+   distribution-package `binutils`.
+ - objcopy: Console application to copy and translate object files.
+   This typically can be found in the distribution-package `binutils`,
+   too.
+
+- Mac OS X (64bit):
+
+ - Mac OS X 10.7 (Lion) or newer.
+
+
 Usage
 -----
+
 Basic usage is very simple, just run it against your main script::
 
       pyinstaller /path/to/yourscript.py
@@ -56,41 +122,43 @@ Basic usage is very simple, just run it against your main script::
 For more details, see the `manual`_.
 
 
-Experimental ports
-------------------
-- Solaris
-   * ldd
-   * objdump
+Untested Platforms
+---------------------
 
-- AIX
-   * AIX 6.1 or newer.
-     Python executables created using PyInstaller on AIX 6.1 should
-     work on AIX 5.2/5.3. PyInstaller will not work with statically
-     linked Python libraries which has been encountered in Python 2.2
-     installations on AIX 5.x.
-   * ldd
+The following platforms have been contributed and any feedback or
+enhancements on these are welcome.
 
 - FreeBSD
-   * ldd
+
+ - ldd
+
+- Solaris
+
+ - ldd
+ - objdump
+
+- AIX
+
+ - AIX 6.1 or newer. PyInstaller will not work with statically
+   linked Python libraries.
+ - ldd
 
 
-Before using experimental ports, you need to build the PyInstaller
+Before using any contributed platform, you need to build the PyInstaller
 bootloader, as we do not ship binary packages. Download PyInstaller
-sources, and build the bootloader::
+source, and build the bootloader::
      
         cd bootloader
-        python ./waf configure build install
+        python ./waf distclean all
 
-then install PyInstaller::
+Then install PyInstaller::
 
         python setup.py install
         
-or simply use it direclty from the source (pyinstaller.py).
+or simply use it directly from the source (pyinstaller.py).
 
 
 
 .. _PyCrypto: https://www.dlitz.net/software/pycrypto/
-.. _pywin32: http://sourceforge.net/projects/pywin32/
-.. _`manual`: http://pythonhosted.org/PyInstaller
-.. _`changelog`: https://github.com/pyinstaller/pyinstaller/blob/develop/doc/CHANGES.txt
+.. _`manual`: https://pyinstaller.rtfd.org/en/latest/
 

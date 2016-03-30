@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -10,7 +10,7 @@
 
 import os
 
-from PyInstaller.hooks.hookutils import qt4_menu_nib_dir
+from PyInstaller.utils.hooks import qt_menu_nib_dir
 from PyInstaller.compat import getsitepackages, is_darwin, is_win
 
 
@@ -18,12 +18,11 @@ from PyInstaller.compat import getsitepackages, is_darwin, is_win
 # The PySide directory contains Qt dlls. We need to avoid including different
 # version of Qt libraries when there is installed another application (e.g. QtCreator)
 if is_win:
-    from PyInstaller.utils.winutils import extend_system_path
+    from PyInstaller.utils.win32.winutils import extend_system_path
     extend_system_path([os.path.join(x, 'PyQt4') for x in getsitepackages()])
 
 
-# In the new consolidated mode any PyQt depends on _qt
-hiddenimports = ['sip', 'PyQt4._qt']
+hiddenimports = ['sip']
 
 
 # For Qt to work on Mac OS X it is necessary to include directory qt_menu.nib.
@@ -31,5 +30,5 @@ hiddenimports = ['sip', 'PyQt4._qt']
 # app.
 if is_darwin:
     datas = [
-        (qt4_menu_nib_dir(), ''),
+        (qt_menu_nib_dir('PyQt4'), ''),
     ]

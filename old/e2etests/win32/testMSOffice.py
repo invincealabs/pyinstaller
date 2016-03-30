@@ -1,4 +1,5 @@
-# Copyright (C) 2005, Giovanni Bajo
+# Copyright (c) 2010-2016, PyInstaller Development Team
+# Copyright (c) 2005-2009, Giovanni Bajo
 # Based on previous work under copyright (c) 1999, 2002 McMillan Enterprises, Inc.
 #
 # This program is free software; you can redistribute it and/or
@@ -69,7 +70,7 @@ def TestWord():
             raise ImportError, "Can not load the Word8 typelibrary."
         word = win32com.client.Dispatch("Word.Application.8")
         TestWord8(word)
-    except ImportError, details:
+    except ImportError as details:
         print("Can not test MSWord8 -", details)
 
 def TestWord7(word):

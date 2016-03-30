@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -8,16 +8,13 @@
 #-----------------------------------------------------------------------------
 
 
-hiddenimports = ['sip', 'PyQt4.QtCore', 'PyQt4._qt']
+from PyInstaller.utils.hooks import qt_plugins_binaries
 
-from PyInstaller.hooks.hookutils import qt4_plugins_binaries
+binaries = []
+binaries.extend(qt_plugins_binaries('accessible', namespace='PyQt4'))
+binaries.extend(qt_plugins_binaries('iconengines', namespace='PyQt4'))
+binaries.extend(qt_plugins_binaries('imageformats', namespace='PyQt4'))
+binaries.extend(qt_plugins_binaries('inputmethods', namespace='PyQt4'))
+binaries.extend(qt_plugins_binaries('graphicssystems', namespace='PyQt4'))
 
-
-def hook(mod):
-    # TODO fix this hook to use attribute 'binaries'.
-    mod.pyinstaller_binaries.extend(qt4_plugins_binaries('accessible'))
-    mod.pyinstaller_binaries.extend(qt4_plugins_binaries('iconengines'))
-    mod.pyinstaller_binaries.extend(qt4_plugins_binaries('imageformats'))
-    mod.pyinstaller_binaries.extend(qt4_plugins_binaries('inputmethods'))
-    mod.pyinstaller_binaries.extend(qt4_plugins_binaries('graphicssystems'))
-    return mod
+hiddenimports = ['sip', 'PyQt4.QtCore']

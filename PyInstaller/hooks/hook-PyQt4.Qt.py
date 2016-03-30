@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -9,7 +9,6 @@
 
 
 hiddenimports = ['sip',
-                 'PyQt4._qt',
                  'PyQt4.QtAssistant',
                  'PyQt4.QtCore',
                  'PyQt4.QtGui',

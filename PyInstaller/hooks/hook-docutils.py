@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------------
-# Copyright (c) 2013, PyInstaller Development Team.
+# Copyright (c) 2013-2016, PyInstaller Development Team.
 #
 # Distributed under the terms of the GNU General Public License with exception
 # for distributing bootloader.
@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------------
 
 
-from PyInstaller.hooks.hookutils import collect_submodules, collect_data_files
+from PyInstaller.utils.hooks import collect_submodules, collect_data_files
 
 hiddenimports = (collect_submodules('docutils.languages') +
                  collect_submodules('docutils.writers') +
