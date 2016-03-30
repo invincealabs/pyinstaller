@@ -15,7 +15,6 @@
     'PyQt4':      ['pyi_rth_qt4plugins.py'],
     'PyQt5':      ['pyi_rth_qt5.py', 'pyi_rth_qt5plugins.py'],
     'PyQt5.QtQuick':  ['pyi_rth_qml.py'],
-    'Tkinter':    ['pyi_rth_Tkinter.py'],
     'PyQt5.QtWebEngineWidgets': ['pyi_rth_qt5webengine.py'],
     'PySide':      ['pyi_rth_qt4plugins.py'],
     '_tkinter':    ['pyi_rth__tkinter.py'],
