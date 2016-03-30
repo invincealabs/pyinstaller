@@ -14,7 +14,7 @@ http://www.zeromq.org/
 """
 
 
-import glob
+import re
 import os
 from PyInstaller.hooks.hookutils import collect_submodules
 
@@ -24,13 +24,6 @@ hiddenimports = ['zmq.utils.garbage',
                  'zmq.utils.strtypes',
                  ]
 hiddenimports.extend(collect_submodules('zmq.backend'))
-
-
-hiddenimports = [
-    'zmq.core.pysocket',
-    'zmq.utils.jsonapi',
-    'zmq.utils.strtypes',
-]
 
 
 def hook(mod):
